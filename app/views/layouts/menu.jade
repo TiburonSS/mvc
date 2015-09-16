@@ -1,0 +1,11 @@
+#menu.row
+	div.col-md-1(style="width:70px;padding-left:5px;")
+		button#hmb(title="На головну"): img(src="/img/home-icon.png")
+	div.col-md-1(style="width:70px;padding-left:5px;")
+		button#propb(title="Налаштування"): img(src="/img/prop32.png")
+	div.col-md-2
+		ul.nav.nav-pills
+			li.dropdown(role='presentation'): a.dropdown-toggle(href='#',data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false") Довідники <span class="caret"></span>
+				ul.dropdown-menu
+					li: button.mb.btn.btn-default Періоди
+					li: a.subm(href='#')

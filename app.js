@@ -3,7 +3,9 @@ var express = require('express')
   , pages = require(__dirname + '/app/controllers/pages') 
 
 // configuration settings 
-app.use(express.static(__dirname + '/public'))
+app.use('/css', express.static(__dirname + '/public/css'));
+app.use('/img', express.static(__dirname + '/public/img'));
+app.use('/sc', express.static(__dirname + '/public/sc'));
 
 var templating = require('consolidate');
 app.engine('jade', templating.jade);

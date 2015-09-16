@@ -1,0 +1,16 @@
+doctype html
+html
+ include layouts/header 
+ body
+  div.container-fluid
+    div#title.row
+      p Розрахунок лікарняних
+    include layouts/menu
+    script(src="/sc/menu.js")
+    #contain.row
+      #content.row
+        #search.col-md-3
+          include search_emloyee
+        #employees.col-md-7
+      #empl.row
+  

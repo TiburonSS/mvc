@@ -1,0 +1,23 @@
+.row
+	h3(align="center") 
+		| За запитом 
+		span.searchtext #{text} 
+		| знайдено: #{kolvo} співробітників
+.row(align="center")
+	table#tbl-employees(border="1")
+		thead
+			tr
+				td(width="80",align="center") Таб.№
+				td(width="240",align="center") ПІБ
+				td(width="100",align="center") Ідент. код
+				td(width="40",align="center") 
+		tbody#ress.tb
+			each item in arr
+				tr
+					td(width="80")= item.tabn
+					td(width="240",style="padding-left:5px;")= item.fio_f
+					td(width="100")= item.idkod
+					td(width="40") 
+						button.btn-go-to-epml.btn.btn-default.btn-xs(type="button", tabn=item.tabn)
+							img(src="/img/arrow-forward-1.png")
+script(src="/sc/go_to_employee.js")

@@ -1,0 +1,59 @@
+body{
+	font-family: "Source Sans Pro",Open Sans,Roboto,Helvetica,Arial,sans-serif;
+	margin: 0;
+}
+.container-fluid{
+	padding-left: 0px;
+	padding-left: 0px;
+}
+.row{
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+#title{
+	background-color: #6f5499;
+	text-align: center;
+}
+h1{
+	margin: 0;
+}
+#title-col2{
+	padding-top: 5px;
+}
+#title p{
+	font-size: 36px;
+	color: #FFFFFF;
+}
+#menu{
+	background-color:  #DDDDC9;
+}
+.searchtext {
+	color: #1FAB54;
+	font-weight: bold;
+}
+thead{
+	display: block;
+	background-color: silver;
+}
+tbody{
+	display: block;
+}
+#tbl-employees tbody{
+	display: block;
+	max-height: 315px;
+	overflow-y: scroll;
+	
+}
+.tb > tr:hover{
+	background-color: #E9FF85;
+}
+.mb{
+	width: 100%;
+}
+#pers td{
+	padding-left: 5px;
+}
+#pers .n{
+	background-color: #FAEFEF;
+}

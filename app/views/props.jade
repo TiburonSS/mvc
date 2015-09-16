@@ -1,0 +1,42 @@
+- var rabotadn, rabotadk, bolndn, bolndk;
+- each item in dat
+	- rabotadn=moment(item.rabota_dn).format("DD.MM.YYYY")
+	- rabotadk=moment(item.rabota_dk).format("DD.MM.YYYY")
+	- bolndn=moment(item.boln_dn).format("DD.MM.YYYY")
+	- bolndk=moment(item.boln_dk).format("DD.MM.YYYY")
+.row
+	h2(align="center") Налаштування системи
+.row
+	.col-md-1
+	.col-md-2(style="border:1px dashed gray;padding-left:0px;padding-right:0px;")
+		h5(align="center", style="background-color:#E8E1E1;margin-top:0px;padding-top:5px;padding-bottom:5px;border-bottom:1px dashed gray;") Період для вибору роботи співробітника
+		.row(align="center", style="margin-left:0px;margin-right:0px;margin-bottom:5px;")
+			table#datas(cellspacing="5")
+				tbody
+					tr
+						td.n(width="60") Дата з
+						td(width="120") 
+							input.datapick(type="text",name="rabotadn", id="rabotadn", value=rabotadn)
+					tr
+						td.n Дата по
+						td
+							input.datapick(type="text",name="rabotadk", id="rabotadk", value=rabotadk)
+	.col-md-1
+	.col-md-3(style="border:1px dashed gray;padding-left:0px;padding-right:0px;")
+		h5(align="center", style="background-color:#E8E1E1;margin-top:0px;padding-top:5px;padding-bottom:5px;border-bottom:1px dashed gray;") Період для вибору лікарняних листків співробітника
+		.row(align="center", style="margin-left:0px;margin-right:0px;margin-bottom:5px;")
+			table#datas2(cellspacing="5")
+				tbody
+					tr
+						td.n(width="60") Дата з
+						td(width="120") 
+							input.datapick(type="text",name="bolndn", id="bolndn", value=bolndn)
+					tr
+						td.n Дата по
+						td
+							input.datapick(type="text",name="bolndk", id="bolndk", value=bolndk)
+.row(align="center" style="margin-top:10px;")
+	button#saveprops.btn-default.btn
+		img(src="/img/save32.png") 
+		span Зберегти зміни
+script(src="/sc/props.js")

@@ -1,0 +1,39 @@
+.col-md-4
+	.row
+		h5(align="left",style="font-weight:bold;padding-left:55px;") Персональні дані співробітника
+		each item in pers
+			table#pers(border="1", style="margin-left:10px;")
+				tr
+					td.n(width="80") Таб. №
+					td(width="260")= item.tabn
+				tr
+					td.n ПІБ
+					td(style="font-weight:bold;")= item.fio_f
+				tr
+					td.n Ідент код
+					td= item.idkod
+	.row
+		button#go-to-employees(style="margin-left:20px;") 
+			img(src="/img/list.png")
+	.row
+		h6(align="left",style="font-weight:bold;padding-left:20px;") Дані про роботу за період з #{rabota_dn} по #{rabota_dk}
+		if rabota.length == 0
+			p(align="left", style="color:#F01919;padding-left:30px;font-weight:bold;") В даний період співробітник не працював!
+		else 
+			table#table-rabota(border="1", style="font-size:11px;margin-left:10px;")
+				thead
+					tr
+						td(width="60", align="center", style="min-width:60px;") Дата з
+						td(width="60", align="center", style="min-width:60px;") Дата по
+						td(width="220", align="center", style="min-width:220px;") Посада
+						td(width="40", align="center", style="min-width:40px;") Коеф
+				tbody#table-rabota-body
+					each item in rabota
+						tr
+							td(width="60")= moment(item.datan).format("DD.MM.YYYY")
+							td(width="60")= moment(item.datak).format("DD.MM.YYYY")
+							td(width="220")= item.naimenovanie
+							td(width="40")= item.kd
+.col-md-8
+	p #{ddd}
+script(src="/sc/go_to_employees.js")
