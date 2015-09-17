@@ -13,6 +13,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 // parse application/json
 app.use(bodyParser.json());
 
+app.locals.moment = require('moment');
+
+
 var templating = require('consolidate');
 app.engine('jade', templating.jade);
 app.set('view engine', 'jade');
@@ -23,5 +26,8 @@ app.get('/', function (req, res) { res.redirect('index') });
 app.get('/index', pages.index);
 app.get('/about', pages.about);
 app.post('/employees', pages.employees);
+app.post('/empl', pages.empl);
+app.post('/save_props', pages.save_props);
+app.get('/props', pages.props);
 
 module.exports = app;

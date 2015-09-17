@@ -1,3 +1,6 @@
+var DB = require('../models/db');
+var sugar = require("sugar");
+var moment = require('moment');
 exports.index = function (req, res) {
   res.render('index', {
       title: 'Лікарняні'
@@ -10,29 +13,48 @@ exports.about = function (req, res){
 	});
 };
 
-var fbcon = {};
-fbcon.host = '127.0.0.1';
-fbcon.port = '3050';
-fbcon.database = 'baza';
-fbcon.user = 'SYSDBA';
-fbcon.password = 'masterkey';
-var FB = require('node-firebird');
+exports.props = function(req, res){
+	var sql = "SELECT * FROM boln_props";
+	DB.dbquery(sql,[],function(resp){
+				res.render('props',{dat: resp});
+			});
+};
+
+exports.save_props = function(req, res){
+	var sql = "UPDATE BOLN_PROPS SET rabota_dn = ?, rabota_dk = ?, boln_dn = ?, boln_dk = ?";
+	DB.dbquery(sql,[req.body.rabota_dn, req.body.rabota_dk, req.body.boln_dn, req.body.boln_dk],function(resp){
+		res.send(resp);
+	});
+};
 
 exports.employees = function (req,res){
-	var s = req.body.search;
-	FB.attach(fbcon, function(err, db) {
-		if (err){
-			res.render('error',{text:"Відсутній доступ до бази даних"});//TODO
-		} else {
-			db.query("SELECT * FROM ls WHERE (UPPER(FIO_F) LIKE '%"+s.toUpperCase()+"%') ORDER BY tabn",
-				function(err, result) {
-					res.render('result_employee',{
-						text: "("+s+")",
-						kolvo: result.count(),
-						arr: result
-					});
-				});
-			db.detach();
-		}
+	var sql = "SELECT * FROM ls WHERE (UPPER(FIO_F) LIKE '%"+req.body.search.toUpperCase()+"%') ORDER BY tabn";
+	DB.dbquery(sql,[],function(resp){
+		res.render('result_employee',{
+			text: "("+req.body.search+")",
+			kolvo: resp.count(),
+			arr: resp
+		});
 	});
+};
+
+exports.empl = function(req, res){
+	var tabn = req.body.tabn.toNumber();
+	var out = {};
+	var sql1="SELECT * FROM BOLN_PROPS";
+	DB.dbquery(sql1,[],function(resp){
+			var rabota_dn = moment(resp[0].rabota_dn).format("DD.MM.YYYY");
+			var rabota_dk = moment(resp[0].rabota_dk).format("DD.MM.YYYY");
+			out.rabota_dn = rabota_dn;
+			out.rabota_dk = rabota_dk;
+			var sql2 = "SELECT d.*, f.naimenovanie FROM ls_rabota d, spr_rabota f WHERE d.rabota=f.rabota AND d.tabn="+tabn+" AND d.datan<='"+rabota_dk+"' AND d.datak>='"+rabota_dn+"'";
+			DB.dbquery(sql2,[],function(resp){
+				out.rabota = resp;
+			});
+			var sql3 = "SELECT tabn,fio_f,idkod FROM ls WHERE tabn = ?";
+			DB.dbquery(sql3,[tabn],function(resp){
+				out.pers = resp;
+				res.render("result_empl",out);
+			});
+		});
 };

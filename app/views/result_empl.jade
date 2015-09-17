@@ -26,14 +26,14 @@
 						td(width="60", align="center", style="min-width:60px;") Дата з
 						td(width="60", align="center", style="min-width:60px;") Дата по
 						td(width="220", align="center", style="min-width:220px;") Посада
-						td(width="40", align="center", style="min-width:40px;") Коеф
+						td(width="30", align="center", style="min-width:30px;") Коеф
 				tbody#table-rabota-body
 					each item in rabota
 						tr
 							td(width="60")= moment(item.datan).format("DD.MM.YYYY")
 							td(width="60")= moment(item.datak).format("DD.MM.YYYY")
 							td(width="220")= item.naimenovanie
-							td(width="40")= item.kd
+							td(width="30")= item.kd
 .col-md-8
-	p #{ddd}
+
 script(src="/sc/go_to_employees.js")
