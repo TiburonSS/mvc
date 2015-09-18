@@ -15,7 +15,7 @@ var FB = require('node-firebird');
 exports.dbquery = function(sql, params, callback){
     FB.attach(fbcon, function(err, db) {
         if (err){
-            throw err;
+            //throw err;
             //res.render('error',{text:"Відсутній доступ до бази даних"});//TODO
         } else {
             db.query(sql,params,function(err, result) {

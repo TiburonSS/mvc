@@ -1,11 +1,16 @@
 #menu.row
-	div.col-md-1(style="width:70px;padding-left:5px;")
-		button#hmb(title="На головну"): img(src="/img/home-icon.png")
-	div.col-md-1(style="width:70px;padding-left:5px;")
-		button#propb(title="Налаштування"): img(src="/img/prop32.png")
-	div.col-md-2
+	div.col-xs-1(style="width:70px;padding-left:5px;padding-top:8px;")
+		a#hmb(title="На головну", href="#"): img(src="/img/home-icon.png")
+	div.col-xs-1(style="width:70px;padding-left:5px;padding-top:8px;")
+		a#propb(title="Налаштування", href="#"): img(src="/img/prop32.png")
+	div.col-xs-1(style="width:100px;padding-left:5px;")
 		ul.nav.nav-pills
-			li.dropdown(role='presentation'): a.dropdown-toggle(href='#',data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false") Довідники <span class="caret"></span>
-				ul.dropdown-menu
-					li: button.mb.btn.btn-default Періоди
-					li: a.subm(href='#')
+			li.dropdown(role='presentation')
+				a.dropdown-toggle(href='#',data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false") 
+					img(src="/img/reference32.png") 
+					<span class="caret"></span>
+					ul.dropdown-menu
+						li: button.mb.btn.btn-default Періоди
+						li: a.subm(href='#')
+	div.col-xs-1(style="width:70px;padding-left:5px;padding-top:8px;")
+		a#about(title="About...", href="/about"): img(src="/img/about32.png")

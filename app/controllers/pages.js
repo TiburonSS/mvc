@@ -45,16 +45,21 @@ exports.empl = function(req, res){
 	DB.dbquery(sql1,[],function(resp){
 			var rabota_dn = moment(resp[0].rabota_dn).format("DD.MM.YYYY");
 			var rabota_dk = moment(resp[0].rabota_dk).format("DD.MM.YYYY");
+			var boln_dn = moment(resp[0].boln_dn).format("DD.MM.YYYY");
+			var boln_dk = moment(resp[0].boln_dk).format("DD.MM.YYYY");
 			out.rabota_dn = rabota_dn;
 			out.rabota_dk = rabota_dk;
+			out.boln_dn = boln_dn;
+			out.boln_dk = boln_dk;
 			var sql2 = "SELECT d.*, f.naimenovanie FROM ls_rabota d, spr_rabota f WHERE d.rabota=f.rabota AND d.tabn="+tabn+" AND d.datan<='"+rabota_dk+"' AND d.datak>='"+rabota_dn+"'";
 			DB.dbquery(sql2,[],function(resp){
 				out.rabota = resp;
-			});
-			var sql3 = "SELECT tabn,fio_f,idkod FROM ls WHERE tabn = ?";
-			DB.dbquery(sql3,[tabn],function(resp){
+				var sql3 = "SELECT tabn,fio_f,idkod FROM ls WHERE tabn = ?";
+				DB.dbquery(sql3,[tabn],function(resp){
 				out.pers = resp;
 				res.render("result_empl",out);
 			});
+			});
+			
 		});
 };
