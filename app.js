@@ -26,7 +26,7 @@ app.get('/', function (req, res) { res.redirect('index') });
 app.get('/index', pages.index);
 app.get('/about', pages.about);
 app.post('/employees', pages.employees);
-app.post('/empl', pages.empl);
+app.post('/empl', pages.empl2);
 app.post('/save_props', pages.save_props);
 app.get('/props', pages.props);
 
