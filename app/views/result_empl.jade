@@ -16,6 +16,7 @@
 	.row
 		button#go-to-employees(style="margin-left:20px;") 
 			img(src="/img/find32.png")
+	script(src="/sc/go_to_employees.js")
 	.row(style="background-color:#F6F4E3;")
 		h6(align="left",style="font-weight:bold;padding-left:20px;") Дані про роботу за період з #{rabota_dn} по #{rabota_dk}
 	.row
@@ -41,6 +42,37 @@
 .col-xs-6#boln(style="padding-left:1px;padding-right:1px;")
 	.row(align="left", style="background-color:#F6F4E3;")
 		h5(align="center", style="font-weight:bold;") Лікарняні листки за період з #{boln_dn} по #{boln_dk}
+	script(src="/sc/grid.locale-ua.js")
+	script(src="/sc/jquery.jqGrid.min.js")
+	.row(style="padding-left:15px;")
+		table#le_table
+		div#le_tablePager
+		div#le_tableNavigator
+	script(type='text/javascript').
+		$(function(){
+			var grid=$("#le_table" ) //находим элемент крепления для грида
+			, bar= le_tablePager
+			, navig= le_tableNavigator;
+			});
+			$("#le_table").jqGrid({
+				url:"/get_ls_boln",
+				mtype: 'POST',
+				datatype: 'JSON',
+				postData:{tabn:"#{tabn}",dn:"#{boln_dn}",dk:"#{boln_dk}"},
+				colNames:['Дата лікарняного','Номер листка','Дата початку','Дата закінчення','Діагноз'],
+				colModel :[
+				{name:'databol', index:'databol', width:80,editable:false,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'}},
+				{name:'nomer', index:'nomer', width:80,editable:false},
+				{name:'datan', index:'datan', width:80,editable:false,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'}},
+				{name:'datak', index:'datak', width:80,editable:false,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'}},
+				{name:'diagnoz', index:'diagnoz', width:180,editable:false},
+				],
+				cmTemplate: {sortable:false},
+				viewrecords: true,
+				pager:'#le_tablePager',
+				height:'auto',
+				shrinkToFit: false
+				}).navGrid('#le_tablePager',{edit:true, add:true, del:true, search:false},{closeAfterEdit: true},{closeAfterAdd:true}); 	
 .col-xs-1(style="border-left:1px dashed gray;min-height:520px;padding-left:1px;padding-right:1px;")
 
-script(src="/sc/go_to_employees.js")
+

@@ -43,7 +43,7 @@ exports.employees = function (req,res){
 exports.empl = function(req, res){
 var tabn = req.body.tabn.toNumber();
 var out = {}; 
-
+out.tabn = tabn;
 var tasks = [
 	function (callback) {
             var sql3 = "SELECT tabn,fio_f,idkod FROM ls WHERE tabn = ?";
@@ -81,4 +81,13 @@ async.series(tasks, function (err, results) {
     res.render("result_empl",out);
 });
 
+};
+
+exports.get_ls_boln = function(req, res){
+	var tabn = req.body.tabn.toNumber();
+	
+	var sql = "SELECT * FROM ls_boln WHERE tabn = ? and databol>= ? and databol<= ?";
+				DB.dbquery(sql,[tabn, req.body.dn, req.body.dk],function(resp){
+				 res.send(JSON.stringify(resp));
+			});
 };

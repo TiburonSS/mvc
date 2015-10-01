@@ -29,5 +29,6 @@ app.post('/employees', pages.employees);
 app.post('/empl', pages.empl);
 app.post('/save_props', pages.save_props);
 app.get('/props', pages.props);
+app.post('/get_ls_boln', pages.get_ls_boln);
 
 module.exports = app;
