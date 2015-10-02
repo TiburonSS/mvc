@@ -1,0 +1,36 @@
+.row(style="padding-left:5px;")
+		table#le_table
+		div#le_tablePager
+		div#le_tableNavigator
+	script(type='text/javascript').
+		$(function(){
+			var grid=$("#le_table" ) //находим элемент крепления для грида
+			, bar= le_tablePager
+			, navig= le_tableNavigator;
+			});
+			$("#le_table").jqGrid({
+				url:"/get_ls_boln",
+				mtype: 'POST',
+				datatype: 'JSON',
+				postData:{tabn:"#{tabn}",dn:"#{boln_dn}",dk:"#{boln_dk}"},
+				colNames:['Дата лікарняного','Номер листка','Дата початку','Дата закінчення','Діагноз',''],
+				colModel :[
+				{name:'databol', index:'databol', width:75,editable:true,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'}},
+				{name:'nomer', index:'nomer', width:70,editable:true},
+				{name:'datan', index:'datan', width:75,editable:true,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'}},
+				{name:'datak', index:'datak', width:75,editable:true,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'}},
+				{name:'diagnoz', index:'diagnoz', width:140,editable:true},
+				{name: 'myac', width:60, fixed:true, sortable:false, search:false,
+				resize:false, formatter:'actions',
+				formatoptions:{keys:true,delOptions:{reloadAfterSubmit:false}}
+				}
+				],
+				cmTemplate: {sortable:false},
+				rowList: [],
+				pgbuttons: false,
+				pgtext: null,
+				viewrecords: false,
+				pager:'#le_tablePager',
+				height:'auto',
+				shrinkToFit: false
+				}).navGrid('#le_tablePager',{edit:true, add:true, del:true, search:false},{closeAfterEdit: true},{closeAfterAdd:true});

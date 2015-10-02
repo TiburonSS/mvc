@@ -79,3 +79,9 @@ th.ui-th-column div {
     height: auto !important;
     vertical-align: middle;
 }
+.ui-jqdialog .ui-jqdialog-title {
+	margin: 0;
+}
+.fm-button {
+	height:auto;
+}
