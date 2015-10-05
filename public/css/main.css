@@ -85,3 +85,7 @@ th.ui-th-column div {
 .fm-button {
 	height:auto;
 }
+.ui-widget-content .ui-state-highlight {
+    background-color: #f3e667;
+    background-image: none;
+}

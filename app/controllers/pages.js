@@ -15,6 +15,19 @@ exports.about = function (req, res){
 	});
 };
 
+exports.spr_period = function(req, res){
+		res.render('spr_period');
+	};
+ 
+
+exports.get_spr_period_data = function (req, res){
+	var sql = "SELECT * FROM spr_period ORDER BY period";
+	DB.dbquery(sql,[],function(resp){
+				res.send(JSON.stringify(resp));
+			});
+	};
+
+
 exports.props = function(req, res){
 	var sql = "SELECT * FROM boln_props";
 	DB.dbquery(sql,[],function(resp){

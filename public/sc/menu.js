@@ -7,4 +7,9 @@ $(function(){
          $("#contain").html(data);   
     });
 	});
+	$("#sprperiod").click(function(){
+		$.get( '/spr_period',function(data) {
+         $("#contain").html(data);   
+    });
+	});
 });

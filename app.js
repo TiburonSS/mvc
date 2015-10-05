@@ -29,6 +29,8 @@ app.post('/employees', pages.employees);
 app.post('/empl', pages.empl);
 app.post('/save_props', pages.save_props);
 app.get('/props', pages.props);
+app.get('/spr_period', pages.spr_period);
+app.post('/get_spr_period_data', pages.get_spr_period_data);
 app.post('/get_ls_boln', pages.get_ls_boln);
 app.post('/set_ls_boln', pages.set_ls_boln);
 

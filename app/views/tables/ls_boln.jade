@@ -4,9 +4,7 @@
 		div#le_tableNavigator
 	script(type='text/javascript').
 		$(function(){
-			var grid=$("#le_table" ) //находим элемент крепления для грида
-			, bar= le_tablePager
-			, navig= le_tableNavigator;
+			var grid=$("#le_table" );
 			var t;
 			$("#le_table").jqGrid({
 				url:"/get_ls_boln",
@@ -55,7 +53,10 @@
 					});
 				},size:10
 				})},
-				{name:'diagnoz', index:'diagnoz', width:140,editable:true},
+				{name:'diagnoz', index:'diagnoz', width:140,editable:true,
+				editoptions:({
+					size:35
+					})},
 				{name:'tabn', index:'tabn', editable:true, hidden:true},
 				{name:'olddatabol', index:'olddatabol', editable:true, hidden:true}
 				],
@@ -69,6 +70,7 @@
 				shrinkToFit: false
 				}).navGrid('#le_tablePager',{edit:true, add:true, del:true, search:false},
 				{
+				width:400,
 				afterShowForm : function(formid){				
 				t = $("#databol").val();
 				return[true];
@@ -80,13 +82,21 @@
 				beforeSubmit:function(postdata, formid) {
 				postdata.tabn="#{tabn}";
 				postdata.olddatabol = t;
-				return[true,""];},
+				if($("#datan").val()>$("#datak").val()){
+				return [false,"Дата початку лікарняного більша за дату закінчення"];
+				} else {
+				return[true,""];}},
 				closeAfterEdit:true
 				},
 				{
 				beforeSubmit:function(postdata, formid) {
 				postdata.tabn="#{tabn}";
-				return[true,""];},
+				if($("#datan").val()>$("#datak").val()){
+				return [false,"Дата початку лікарняного більша за дату закінчення"];
+				} else {
+				return[true,""];
+				}
+				},
 				closeAfterAdd:true
 				},
 				{
@@ -94,5 +104,5 @@
 				var rowData = $(this).jqGrid("getRowData", rowid);
 				return{tabn:"#{tabn}",databol:rowData.databol};}				
 				}
-				);
+				).jqGrid('bindKeys');
 				});
