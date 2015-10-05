@@ -84,10 +84,44 @@ async.series(tasks, function (err, results) {
 };
 
 exports.get_ls_boln = function(req, res){
-	var tabn = req.body.tabn.toNumber();
-	
-	var sql = "SELECT * FROM ls_boln WHERE tabn = ? and databol>= ? and databol<= ?";
-				DB.dbquery(sql,[tabn, req.body.dn, req.body.dk],function(resp){
+	var sql = "SELECT * FROM ls_boln WHERE tabn = ? and databol>= ? and databol<= ? ORDER BY databol";
+				DB.dbquery(sql,[req.body.tabn.toNumber(), req.body.dn, req.body.dk],function(resp){
 				 res.send(JSON.stringify(resp));
 			});
+};
+
+exports.set_ls_boln = function(req, res){
+	var sqlins = "INSERT INTO LS_BOLN (tabn,databol,nomer,datan,datak,diagnoz) VALUES (?, ?, ?, ?, ?, ?)";
+	var sqldel = "DELETE FROM LS_BOLN WHERE TABN = ? AND DATABOL = ?";
+	var sqledit = "UPDATE LS_BOLN SET databol = ?, nomer = ?, datan = ?, datak = ?, diagnoz = ? WHERE TABN = ? AND DATABOL = ?";
+	var oper = req.body.oper;
+	switch (oper){
+		case "add":
+		DB.dbquery(sqlins,[req.body.tabn.toNumber(), 
+						   req.body.databol,
+						   req.body.nomer,
+						   req.body.datan,
+						   req.body.datak,
+						   req.body.diagnoz
+						   ],function(resp){res.send(resp);}
+		);
+		break;
+		case "del":
+		DB.dbquery(sqldel,[req.body.tabn.toNumber(), 
+						   req.body.databol],function(resp){res.send(resp);}
+		);
+		break;
+		case "edit":
+		DB.dbquery(sqledit,[
+						   req.body.databol, 
+						   req.body.nomer, 
+						   req.body.datan, 
+						   req.body.datak, 
+						   req.body.diagnoz, 
+						   req.body.tabn.toNumber(), 
+						   req.body.olddatabol],function(resp){res.send(resp);}
+		);
+		break;
+	};
+
 };

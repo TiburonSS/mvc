@@ -7,13 +7,14 @@
 			var grid=$("#le_table" ) //находим элемент крепления для грида
 			, bar= le_tablePager
 			, navig= le_tableNavigator;
-			
+			var t;
 			$("#le_table").jqGrid({
 				url:"/get_ls_boln",
+				editurl:"/set_ls_boln",
 				mtype: 'POST',
 				datatype: 'JSON',
 				postData:{tabn:"#{tabn}",dn:"#{boln_dn}",dk:"#{boln_dk}"},
-				colNames:['Номер листка','Дата лікарняного','Дата початку','Дата закінчення','Діагноз',''],
+				colNames:['Номер листка','Дата лікарняного','Дата початку','Дата закінчення','Діагноз','',''],
 				colModel :[
 				{name:'nomer', index:'nomer', width:70,editable:true},
 				{name:'databol', index:'databol', width:80,editable:true,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'},
@@ -26,18 +27,37 @@
 					dateFormat: 'dd.mm.yy',
 					yearRange: '2015:2050'
 					});
-				},
-				size:10,
-				srcformat: 'ISO8601Long',
-				newformat: 'dd.mm.yy'
+				},size:10
 				})
 				},
-				{name:'datan', index:'datan', width:75,editable:true,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'}},
-				{name:'datak', index:'datak', width:75,editable:true,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'}},
+				{name:'datan', index:'datan', width:75,editable:true,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'},
+				editoptions:(
+					{dataInit: function(elem) {$(elem).datepicker({
+					monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июнь", "Июль", "Авг", "Сент", "Окт", "Ноя", "Дек" ],
+					autoSize: false,
+					changeMonth: true,
+					changeYear: true,
+					dateFormat: 'dd.mm.yy',
+					yearRange: '2015:2050'
+					});
+				},size:10
+				})
+				},
+				{name:'datak', index:'datak', width:75,editable:true,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'},
+				editoptions:(
+					{dataInit: function(elem) {$(elem).datepicker({
+					monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июнь", "Июль", "Авг", "Сент", "Окт", "Ноя", "Дек" ],
+					autoSize: false,
+					changeMonth: true,
+					changeYear: true,
+					dateFormat: 'dd.mm.yy',
+					yearRange: '2015:2050'
+					});
+				},size:10
+				})},
 				{name:'diagnoz', index:'diagnoz', width:140,editable:true},
-				{name: 'myac', width:60, fixed:true, sortable:false, search:false,
-				resize:false
-				}
+				{name:'tabn', index:'tabn', editable:true, hidden:true},
+				{name:'olddatabol', index:'olddatabol', editable:true, hidden:true}
 				],
 				cmTemplate: {sortable:false},
 				rowList: [],
@@ -47,5 +67,32 @@
 				pager:'#le_tablePager',
 				height:'auto',
 				shrinkToFit: false
-				}).navGrid('#le_tablePager',{edit:true, add:true, del:true, search:false},{closeAfterEdit: true},{closeAfterAdd:true});
+				}).navGrid('#le_tablePager',{edit:true, add:true, del:true, search:false},
+				{
+				afterShowForm : function(formid){				
+				t = $("#databol").val();
+				return[true];
+				}, 
+				afterclickPgButtons : function(whichbutton, formid, rowid){
+				t = $("#databol").val();
+				return[true];
+				}, 
+				beforeSubmit:function(postdata, formid) {
+				postdata.tabn="#{tabn}";
+				postdata.olddatabol = t;
+				return[true,""];},
+				closeAfterEdit:true
+				},
+				{
+				beforeSubmit:function(postdata, formid) {
+				postdata.tabn="#{tabn}";
+				return[true,""];},
+				closeAfterAdd:true
+				},
+				{
+				onclickSubmit:function(postdata, rowid) {
+				var rowData = $(this).jqGrid("getRowData", rowid);
+				return{tabn:"#{tabn}",databol:rowData.databol};}				
+				}
+				);
 				});
