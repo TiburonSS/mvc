@@ -1,4 +1,4 @@
-.row(style="padding-left:5px;")
+.row(align="center")
 		table#le_table
 		div#le_tablePager
 		div#le_tableNavigator
@@ -7,22 +7,36 @@
 			var grid=$("#le_table" ) //находим элемент крепления для грида
 			, bar= le_tablePager
 			, navig= le_tableNavigator;
-			});
+			
 			$("#le_table").jqGrid({
 				url:"/get_ls_boln",
 				mtype: 'POST',
 				datatype: 'JSON',
 				postData:{tabn:"#{tabn}",dn:"#{boln_dn}",dk:"#{boln_dk}"},
-				colNames:['Дата лікарняного','Номер листка','Дата початку','Дата закінчення','Діагноз',''],
+				colNames:['Номер листка','Дата лікарняного','Дата початку','Дата закінчення','Діагноз',''],
 				colModel :[
-				{name:'databol', index:'databol', width:75,editable:true,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'}},
 				{name:'nomer', index:'nomer', width:70,editable:true},
+				{name:'databol', index:'databol', width:80,editable:true,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'},
+				editoptions:(
+					{dataInit: function(elem) {$(elem).datepicker({
+					monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июнь", "Июль", "Авг", "Сент", "Окт", "Ноя", "Дек" ],
+					autoSize: false,
+					changeMonth: true,
+					changeYear: true,
+					dateFormat: 'dd.mm.yy',
+					yearRange: '2015:2050'
+					});
+				},
+				size:10,
+				srcformat: 'ISO8601Long',
+				newformat: 'dd.mm.yy'
+				})
+				},
 				{name:'datan', index:'datan', width:75,editable:true,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'}},
 				{name:'datak', index:'datak', width:75,editable:true,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'}},
 				{name:'diagnoz', index:'diagnoz', width:140,editable:true},
 				{name: 'myac', width:60, fixed:true, sortable:false, search:false,
-				resize:false, formatter:'actions',
-				formatoptions:{keys:true,delOptions:{reloadAfterSubmit:false}}
+				resize:false
 				}
 				],
 				cmTemplate: {sortable:false},
@@ -34,3 +48,4 @@
 				height:'auto',
 				shrinkToFit: false
 				}).navGrid('#le_tablePager',{edit:true, add:true, del:true, search:false},{closeAfterEdit: true},{closeAfterAdd:true});
+				});
