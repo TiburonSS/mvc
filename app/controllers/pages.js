@@ -104,14 +104,15 @@ exports.get_ls_boln = function(req, res){
 };
 
 exports.set_ls_boln = function(req, res){
-	var sqlins = "INSERT INTO LS_BOLN (tabn,databol,nomer,datan,datak,diagnoz) VALUES (?, ?, ?, ?, ?, ?)";
+	var sqlins = "INSERT INTO LS_BOLN (tabn,databol,seriya,nomer,datan,datak,diagnoz) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	var sqldel = "DELETE FROM LS_BOLN WHERE TABN = ? AND DATABOL = ?";
-	var sqledit = "UPDATE LS_BOLN SET databol = ?, nomer = ?, datan = ?, datak = ?, diagnoz = ? WHERE TABN = ? AND DATABOL = ?";
+	var sqledit = "UPDATE LS_BOLN SET databol = ?, seriya = ?, nomer = ?, datan = ?, datak = ?, diagnoz = ? WHERE TABN = ? AND DATABOL = ?";
 	var oper = req.body.oper;
 	switch (oper){
 		case "add":
 		DB.dbquery(sqlins,[req.body.tabn.toNumber(), 
 						   req.body.databol,
+						   req.body.seriya,
 						   req.body.nomer,
 						   req.body.datan,
 						   req.body.datak,
@@ -127,6 +128,7 @@ exports.set_ls_boln = function(req, res){
 		case "edit":
 		DB.dbquery(sqledit,[
 						   req.body.databol, 
+						   req.body.seriya, 
 						   req.body.nomer, 
 						   req.body.datan, 
 						   req.body.datak, 

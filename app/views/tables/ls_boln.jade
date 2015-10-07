@@ -12,8 +12,9 @@
 				mtype: 'POST',
 				datatype: 'JSON',
 				postData:{tabn:"#{tabn}",dn:"#{boln_dn}",dk:"#{boln_dk}"},
-				colNames:['Номер листка','Дата лікарняного','Дата початку','Дата закінчення','Діагноз','',''],
+				colNames:['Серія','Номер листка','Дата лікарняного','Дата початку','Дата закінчення','Діагноз','',''],
 				colModel :[
+				{name:'seriya', index:'seriya', width:40,editable:true},
 				{name:'nomer', index:'nomer', width:70,editable:true},
 				{name:'databol', index:'databol', width:80,editable:true,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'},
 				editoptions:(
