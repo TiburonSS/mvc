@@ -13,11 +13,11 @@
 				editurl:"",
 				mtype: 'POST',
 				datatype: 'JSON',
-				colNames:['Період','Найменування періоду','Дата початку','Дата закінчення'],
+				colNames:['Період','Найменування періоду','Дата початку','Дата закінчення','Робочих кал. днів'],
 				colModel :[
-				{name:'period', index:'period', width:70,editable:true},
-				{name:'naimenovanie', index:'naimenovanie', width:170,editable:true},
-				{name:'datan', index:'datan', width:85,editable:true,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'},
+				{name:'period', index:'period', width:70,editable:true,editrules:{integer:true,required: true}},
+				{name:'naimenovanie', index:'naimenovanie', width:170,editable:true,editrules:{required: true}},
+				{name:'datan', index:'datan', width:85,editable:true,formatter: 'date',editrules:{required: true},formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'},
 				editoptions:(
 					{dataInit: function(elem) {$(elem).datepicker({
 					monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июнь", "Июль", "Авг", "Сент", "Окт", "Ноя", "Дек" ],
@@ -30,7 +30,7 @@
 				},size:10
 				})
 				},
-				{name:'datak', index:'datak', width:85,editable:true,formatter: 'date', formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'},
+				{name:'datak', index:'datak', width:85,editable:true,formatter:'date',editrules:{required: true},formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'},
 				editoptions:(
 					{dataInit: function(elem) {$(elem).datepicker({
 					monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июнь", "Июль", "Авг", "Сент", "Окт", "Ноя", "Дек" ],
@@ -41,7 +41,8 @@
 					yearRange: '2010:2050'
 					});
 				},size:10
-				})}
+				})},
+				{name:'rkd', index:'rkd', width:50,editable:true,editrules:{integer:true},editoptions:{size:4}}
 				],
 				cmTemplate: {sortable:false},
 				rowList: [],
