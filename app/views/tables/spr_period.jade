@@ -1,0 +1,56 @@
+.row(align="center")
+		table#le_table
+		div#le_tablePager
+		div#le_tableNavigator
+	script(type='text/javascript').
+		$(function(){
+			var grid=$("#le_table" );
+			var t;
+			$("#le_table").jqGrid({
+				url:"/get_spr_period_data",
+				editurl:"",
+				mtype: 'POST',
+				datatype: 'JSON',
+				colNames:['Період','Найменування періоду','Дата початку','Дата закінчення','Робочих кал. днів'],
+				colModel :[
+				{name:'period', index:'period', width:70,editable:true,editrules:{integer:true,required: true}},
+				{name:'naimenovanie', index:'naimenovanie', width:170,editable:true,editrules:{required: true}},
+				{name:'datan', index:'datan', width:85,editable:true,formatter: 'date',editrules:{required: true},formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'},
+				editoptions:(
+					{dataInit: function(elem) {$(elem).datepicker({
+					monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июнь", "Июль", "Авг", "Сент", "Окт", "Ноя", "Дек" ],
+					autoSize: false,
+					changeMonth: true,
+					changeYear: true,
+					dateFormat: 'dd.mm.yy',
+					yearRange: '2000:2050'
+					});
+				},size:10
+				})
+				},
+				{name:'datak', index:'datak', width:85,editable:true,formatter:'date',editrules:{required: true},formatoptions: { srcformat: 'ISO8601Long', newformat: 'd.m.Y'},
+				editoptions:(
+					{dataInit: function(elem) {$(elem).datepicker({
+					monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июнь", "Июль", "Авг", "Сент", "Окт", "Ноя", "Дек" ],
+					autoSize: false,
+					changeMonth: true,
+					changeYear: true,
+					dateFormat: 'dd.mm.yy',
+					yearRange: '2010:2050'
+					});
+				},size:10
+				})},
+				{name:'rkd', index:'rkd', width:60,editable:true,editrules:{integer:true},editoptions:{size:4}}
+				],
+				cmTemplate: {sortable:false},
+				rowList: [],
+				rowNum:-1,
+				pgbuttons: false,
+				pgtext: null,
+				//viewrecords: false,
+				pager:'#le_tablePager',
+				height:'350',
+				shrinkToFit: false
+				}).navGrid('#le_tablePager',{edit:true, add:true, del:true, search:false}
+				).jqGrid('bindKeys');
+				});
