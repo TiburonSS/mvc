@@ -27,6 +27,38 @@ exports.get_spr_period_data = function (req, res){
 			});
 	};
 
+exports.set_spr_period_data = function (req, res){
+	var sqlins = "INSERT INTO spr_period (period, naimenovanie, datan, datak, rkd) VALUES (?, ?, ?, ?, ?)";
+	var sqldel = "DELETE FROM SPR_PERIOD WHERE PERIOD = ?";
+	var sqledit = "UPDATE SPR_PERIOD SET period = ?, naimenovanie = ?, datan = ?, datak = ?, rkd = ? WHERE PERIOD = ?";
+	var oper = req.body.oper;
+	switch (oper){
+		case "add":
+		DB.dbquery(sqlins,[req.body.period,
+						   req.body.naimenovanie,
+						   req.body.datan,
+						   req.body.datak,
+						   req.body.rkd
+						   ],function(resp){res.send(resp);}
+		);
+		break;
+		case "del":
+		DB.dbquery(sqldel,[req.body.period],function(resp){res.send(resp);}
+		);
+		break;
+		case "edit":
+		DB.dbquery(sqledit,[
+						   req.body.period, 
+						   req.body.naimenovanie, 
+						   req.body.datan, 
+						   req.body.datak, 
+						   req.body.rkd, 
+						   req.body.oldperiod],function(resp){res.send(resp);}
+		);
+		break;
+	};
+	};
+
 
 exports.props = function(req, res){
 	var sql = "SELECT * FROM boln_props";

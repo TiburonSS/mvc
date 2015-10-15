@@ -8,10 +8,10 @@
 			var t;
 			$("#le_table").jqGrid({
 				url:"/get_spr_period_data",
-				editurl:"",
+				editurl:"/set_spr_period_data",
 				mtype: 'POST',
 				datatype: 'JSON',
-				colNames:['Період','Найменування періоду','Дата початку','Дата закінчення','Робочих кал. днів'],
+				colNames:['Період','Найменування періоду','Дата початку','Дата закінчення','Робочих кал. днів',''],
 				colModel :[
 				{name:'period', index:'period', width:70,editable:true,editrules:{integer:true,required: true}},
 				{name:'naimenovanie', index:'naimenovanie', width:170,editable:true,editrules:{required: true}},
@@ -40,17 +40,50 @@
 					});
 				},size:10
 				})},
-				{name:'rkd', index:'rkd', width:60,editable:true,editrules:{integer:true},editoptions:{size:4}}
+				{name:'rkd', index:'rkd', width:60,editable:true,editrules:{integer:true},editoptions:{size:4}},
+				{name:'oldperiod', index:'oldperiod', editable:true, hidden:true}
 				],
 				cmTemplate: {sortable:false},
 				rowList: [],
 				rowNum:-1,
 				pgbuttons: false,
 				pgtext: null,
-				//viewrecords: false,
 				pager:'#le_tablePager',
 				height:'350',
 				shrinkToFit: false
-				}).navGrid('#le_tablePager',{edit:true, add:true, del:true, search:false}
+				}).navGrid('#le_tablePager',{edit:true, add:true, del:true, search:false},
+				{
+				width:400,
+				afterShowForm : function(formid){				
+				t = $("#period").val();
+				return[true];
+				}, 
+				afterclickPgButtons : function(whichbutton, formid, rowid){
+				t = $("#period").val();
+				return[true];
+				}, 
+				beforeSubmit:function(postdata, formid) {
+				postdata.oldperiod = t;
+				if($("#datan").val()>$("#datak").val()){
+				return [false,"Дата початку більша за дату закінчення"];
+				} else {
+				return[true,""];}},
+				closeAfterEdit:true
+				},
+				{
+				beforeSubmit:function(postdata, formid) {
+				if($("#datan").val()>$("#datak").val()){
+				return [false,"Дата початку більша за дату закінчення"];
+				} else {
+				return[true,""];
+				}
+				},
+				closeAfterAdd:true
+				},
+				{
+				onclickSubmit:function(postdata, rowid) {
+				var rowData = $(this).jqGrid("getRowData", rowid);
+				return{period:rowData.period};}				
+				}
 				).jqGrid('bindKeys');
 				});
