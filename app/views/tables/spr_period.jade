@@ -54,6 +54,7 @@
 				}).navGrid('#le_tablePager',{edit:true, add:true, del:true, search:false},
 				{
 				width:400,
+				modal:true,
 				afterShowForm : function(formid){				
 				t = $("#period").val();
 				return[true];
@@ -65,12 +66,15 @@
 				beforeSubmit:function(postdata, formid) {
 				postdata.oldperiod = t;
 				if($("#datan").val()>$("#datak").val()){
-				return [false,"Дата початку більша за дату закінчення"];
+				return[false,"Дата початку більша за дату закінчення"];
 				} else {
-				return[true,""];}},
+				return[true,""];
+				}
+				},
 				closeAfterEdit:true
 				},
 				{
+				modal:true,
 				beforeSubmit:function(postdata, formid) {
 				if($("#datan").val()>$("#datak").val()){
 				return [false,"Дата початку більша за дату закінчення"];

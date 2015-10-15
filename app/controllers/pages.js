@@ -38,7 +38,7 @@ exports.set_spr_period_data = function (req, res){
 						   req.body.naimenovanie,
 						   req.body.datan,
 						   req.body.datak,
-						   req.body.rkd
+						   req.body.rkd.toNumber()
 						   ],function(resp){res.send(resp);}
 		);
 		break;
@@ -52,7 +52,7 @@ exports.set_spr_period_data = function (req, res){
 						   req.body.naimenovanie, 
 						   req.body.datan, 
 						   req.body.datak, 
-						   req.body.rkd, 
+						   req.body.rkd.toNumber(), 
 						   req.body.oldperiod],function(resp){res.send(resp);}
 		);
 		break;
