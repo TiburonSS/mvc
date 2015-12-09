@@ -12,4 +12,9 @@ $(function(){
          $("#contain").html(data);   
     });
 	});
+	$("#about").click(function(){
+		$.get( '/about',function(data) {
+         $("#contain").html(data);   
+    });
+	});
 });
